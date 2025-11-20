@@ -24,12 +24,14 @@ public class DriverRequestController {
     @CrossOrigin(originPatterns = "*")
     public ResponseEntity<Boolean> raiseRideRequest(@RequestBody RideRequestDto requestDto) {
         System.out.println("request for rides received");
+        System.out.println(requestDto.getPassengerId());
+        requestDto.getNearbyDrivers().forEach(System.out::print);
         sendBookingToDrivers(requestDto);
         System.out.println("Req completed");
         return new ResponseEntity<>(Boolean.TRUE, HttpStatus.OK);
     }
 
-    public void sendBookingToDrivers(@RequestBody RideRequestDto requestDto){
+    public void sendBookingToDrivers(RideRequestDto requestDto){
         System.out.println("Executed periodic function");
         // TODO: Ideally the request should only go to nearby drivers, but for simplicity we send it everyone
         simpMessagingTemplate.convertAndSend("/topic/rideRequest", requestDto);
