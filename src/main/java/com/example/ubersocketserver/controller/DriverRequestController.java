@@ -1,5 +1,6 @@
 package com.example.ubersocketserver.controller;
 
+import com.example.ubersocketserver.dto.DriverAssignedEvent;
 import com.example.ubersocketserver.dto.RideRequestDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -35,5 +36,16 @@ public class DriverRequestController {
         System.out.println("Executed periodic function");
         // TODO: Ideally the request should only go to nearby drivers, but for simplicity we send it everyone
         simpMessagingTemplate.convertAndSend("/topic/rideRequest", requestDto);
+    }
+
+    @PostMapping("/notify-driver-assigned")
+    public void notifyPassenger(@RequestBody DriverAssignedEvent event) {
+
+        System.out.println("Notifying passenger about driver assignment...");
+
+        simpMessagingTemplate.convertAndSend(
+                "/topic/driverAssigned/" + event.getPassengerId(),
+                event
+        );
     }
 }

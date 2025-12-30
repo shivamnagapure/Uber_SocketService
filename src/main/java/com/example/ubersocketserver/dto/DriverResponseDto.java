@@ -8,7 +8,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 public class DriverResponseDto {
-    private String bookingId;
-    private String driverId;
+    private Long bookingId;
+    private Long driverId;
     private String status; // ACCEPTED / REJECTED
 }
