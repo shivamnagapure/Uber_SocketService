@@ -3,13 +3,12 @@ spring:
     name: UberSocketServer
 
 server:
-  port: 8084
+  port:${PORT:8084}
 
 eureka:
   client:
     service-url:
-      defaultZone : http://localhost:8761/eureka/
-
+      defaultZone : ${EUREKA_URL}
   instance:
     prefer-ip-address: true
 
